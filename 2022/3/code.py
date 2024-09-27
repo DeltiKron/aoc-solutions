@@ -10,9 +10,9 @@ def get_input(filename):
 def solve1(inputfile):
     lines = get_input(inputfile)
     score = 0
-    for l in lines:
-        items = l.strip()
-        sep = len(l)
+    for line in lines:
+        items = line.strip()
+        sep = len(line)
         c1, c2 = items[: sep // 2], items[sep // 2 :]
         misplaced = set(c1).intersection(set(c2))
         # print(misplaced)

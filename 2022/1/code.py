@@ -8,40 +8,40 @@ def get_input(filename):
 
 def main(infile):
     lines = get_input(infile)
-    currentSum = 0
-    maxSum = 0
-    for l in lines:
-        if l != "":
-            currentSum += int(l)
+    current_sum = 0
+    max_sum = 0
+    for line in lines:
+        if line != "":
+            current_sum += int(line)
         else:
-            maxSum = max(maxSum, currentSum)
-            currentSum = 0
+            max_sum = max(max_sum, current_sum)
+            current_sum = 0
 
-    return maxSum
+    return max_sum
 
 
 def main2(infile):
     lines = get_input(infile)
-    currentSum = 0
-    maxSum = []
-    for l in lines:
-        if l != "":
-            currentSum += int(l)
+    current_sum = 0
+    max_sum = []
+    for line in lines:
+        if line != "":
+            current_sum += int(line)
         else:
-            maxSum.append(currentSum)
-            if len(maxSum) > 3:
-                print(maxSum)
-                maxSum = sorted(maxSum)[1:]
-                print(maxSum)
+            max_sum.append(current_sum)
+            if len(max_sum) > 3:
+                print(max_sum)
+                max_sum = sorted(max_sum)[1:]
+                print(max_sum)
 
-            currentSum = 0
-    maxSum.append(currentSum)
-    if len(maxSum) > 3:
-        print(maxSum)
-        maxSum = sorted(maxSum)[1:]
-        print(maxSum)
+            current_sum = 0
+    max_sum.append(current_sum)
+    if len(max_sum) > 3:
+        print(max_sum)
+        max_sum = sorted(max_sum)[1:]
+        print(max_sum)
 
-    return sum(maxSum)
+    return sum(max_sum)
 
 
 if __name__ == "__main__":
