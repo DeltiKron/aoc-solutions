@@ -1,4 +1,5 @@
 from io import StringIO
+from helpers import read_input
 from numpy import array, diff, genfromtxt, logical_or
 import numpy as np
 
@@ -44,7 +45,7 @@ def solve2(text):
     return result
 
 
-puzzle = open("2024/input_2.txt").read()
+puzzle = read_input("2024/input_2.txt")
 print(solve1(sample))
 print(solve1(puzzle))
 print(solve2(puzzle))

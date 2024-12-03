@@ -1,10 +1,12 @@
 import re
 
+from helpers import read_input
+
 sample = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
 
 
 pattern = re.compile(r"mul\((\d+),(\d+)\)")
-puzzle = open("2024/input_3.txt").read()
+puzzle = read_input(2024, 3)
 
 
 def mul(a, b):

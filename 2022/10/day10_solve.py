@@ -3,13 +3,11 @@ from itertools import product
 from helpers import Grid, read_input
 
 
-puzzle = read_input(10)
-sample = read_input("10_sample")
+puzzle = read_input(2022, 10)
+sample = read_input(2022, "10_sample")
 
 
 class Computer:
-
-
     def __init__(self, callback):
         self.to_add = dict()
         self.X = 1
@@ -22,7 +20,7 @@ class Computer:
         # print(self.cycle)
         changes = self.to_add.get(self.cycle) or [0]
         self.X += sum(changes)
-        
+
     def addx(self, change):
         # print('running addx',change)
         target_cycle = self.cycle + 2
@@ -63,24 +61,24 @@ def solve1(text):
         c.execute_command(line)
     return sum_importance
 
+
 def solve2(text):
-    line = ''
-    
+    line = ""
+
     def cycle_callback(c: Computer, cycle):
         pos_sprite = c.X
-        pos_pixel = (cycle-1) % 40
+        pos_pixel = (cycle - 1) % 40
         nonlocal line
-        line += '#' if abs(pos_sprite - pos_pixel) <= 1 else ' '
+        line += "#" if abs(pos_sprite - pos_pixel) <= 1 else " "
         if len(line) == 40:
             print(line)
-            line = ''
-            
+            line = ""
+
     c = Computer(cycle_callback)
     for command in text.split("\n"):
         # print(line)
         c.execute_command(command)
     # return sum_importance
-
 
 
 # print(solve1(sample))
