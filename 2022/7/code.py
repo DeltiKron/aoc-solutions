@@ -1,9 +1,5 @@
-from ctypes import Array
-from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from pprint import pprint
-from typing import Optional
 
 
 def get_input(filename):

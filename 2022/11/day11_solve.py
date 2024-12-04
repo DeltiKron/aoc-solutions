@@ -1,9 +1,7 @@
 from dataclasses import dataclass, field
 from functools import reduce
-from itertools import product
-from pprint import pprint
-from typing import Dict, List
-from helpers.helpers import Grid, read_input
+from typing import List
+from helpers.helpers import read_input
 
 
 puzzle = read_input(2022, 10)
@@ -114,19 +112,12 @@ def solve1(puzzle):
     monkeys = setup_puzzle(puzzle)
     order = sorted(list(monkeys.keys()))
 
-    def debug_print(monkeys, round):
-        print("*" * 8, round, "*" * 8)
-        for o in order:
-            print(o, monkeys[o].items)
-
-    def round(round_i):
+    def round():
         for n in order:
             monkeys[n].take_turn(monkeys)
-        # debug_print(monkeys, round_i)
-        # exit()
 
-    for i in range(20):
-        round(i + 1)
+    for _ in range(20):
+        round()
     counters = list([m.n_inspections for m in monkeys.values()])
     print(counters)
     return reduce(lambda a, b: a * b, sorted(counters)[-2:], 1)
@@ -168,7 +159,7 @@ def solve2(puzzle):
 
 
 print(solve1(sample))
-print(solve1(read_input(2022, "11")))
+print(solve1(read_input(2022, 11)))
 # print(solve1(puzzle))
 print(solve2(sample))
-print(solve2(read_input(2022, "11")))
+print(solve2(read_input(2022, 11)))

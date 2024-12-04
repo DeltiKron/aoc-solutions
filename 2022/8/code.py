@@ -1,7 +1,6 @@
 from io import StringIO
-from itertools import combinations, product
+from itertools import product
 from pathlib import Path
-from pprint import pprint
 import numpy as np
 
 

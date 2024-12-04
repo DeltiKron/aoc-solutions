@@ -1,4 +1,3 @@
-import itertools
 from pathlib import Path
 
 
@@ -17,14 +16,14 @@ def parse_input(lines):
 def parse_crates(lines):
     lines == lines[::-1]
     width = max(map(lambda x: len(x), lines))
-    for layer, l in enumerate(lines):
-        for i in range(1, min(width - 1, len(l)), 4):
-            print(layer, l[i], i)
+    for layer, line in enumerate(lines):
+        for i in range(1, min(width - 1, len(line)), 4):
+            print(layer, line[i], i)
 
 
 def solve1(inputfile):
     lines = get_input(inputfile)
-    crates, moves = parse_input(lines)
+    crates, _ = parse_input(lines)
     parse_crates(crates)
 
 

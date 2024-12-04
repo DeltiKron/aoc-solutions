@@ -8,9 +8,9 @@ from typing import List
 def read_input(year, day_number: int):
     path = Path.cwd() / str(year)
     pattern = re.compile(f".*\D{day_number}\D.*(?:(?!\.py|\.ipynb))$")
-    files = list(filter(lambda x: pattern.match(x.name), path.rglob(f"*input*.txt")))
+    files = list(filter(lambda x: pattern.match(x.name), path.rglob("*input*.txt")))
     if len(files) < 1:
-        raise Exception(f"No input found for Day {day_number}")
+        raise IOError(f"No input found for Day {day_number}")
     with open(files[0]) as infile:
         raw = infile.readlines()
         return "".join(filter(lambda x: len(x.strip()) > 0, raw))
@@ -44,10 +44,11 @@ class Grid:
         return self.cast_func(self.data[y][x])
 
     def _validate_coords(self, x, y):
-        assert x < self.len_x, "Out of bound in x"
-        assert y < self.len_y, "Out of bound in y"
-        assert 0 <= x, "Out of bound in x"
-        assert 0 <= y, "Out of bound in x"
+        oob_message = "Out of bound in {}"
+        assert x < self.len_x, oob_message.format("x")
+        assert y < self.len_y, oob_message.format("y")
+        assert 0 <= x, oob_message.format("x")
+        assert 0 <= y, oob_message.format("x")
 
     def col(self, x):
         self._validate_coords(x, 0)

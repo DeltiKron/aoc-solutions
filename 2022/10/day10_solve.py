@@ -1,6 +1,4 @@
-from functools import reduce
-from itertools import product
-from helpers import Grid, read_input
+from helpers import read_input
 
 
 puzzle = read_input(2022, 10)
@@ -48,8 +46,6 @@ def solve1(text):
 
     def cycle_callback(c: Computer, cycle):
         # print("callback")
-        if cycle > 220:
-            pass
         if (cycle - 20) % 40 == 0:
             nonlocal sum_importance
             sum_importance += c.cycle * c.X
@@ -78,11 +74,10 @@ def solve2(text):
     for command in text.split("\n"):
         # print(line)
         c.execute_command(command)
-    # return sum_importance
 
 
-# print(solve1(sample))
-# print(solve1(puzzle))
-# print(solve1(puzzle))
+print(solve1(sample))
+print(solve1(puzzle))
+print(solve1(puzzle))
 print(solve2(sample))
 print(solve2(puzzle))

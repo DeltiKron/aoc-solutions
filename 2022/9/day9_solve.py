@@ -1,6 +1,5 @@
-from functools import reduce
-from itertools import product
-from helpers import Grid, read_input
+from xml.dom import ValidationErr
+from helpers import read_input
 
 
 puzzle = read_input(2022, 9).split("\n")
@@ -31,7 +30,7 @@ def move_tail(tail, head):
     dx, dy = hx - tx, hy - ty
 
     if any([abs(dx) > 2, abs(dy) > 2]):
-        raise Exception(f"Unexpected head movement tail:{tail}, head:{head}, delta:{(dx,dy)}")
+        raise ValidationErr(f"Unexpected head movement tail:{tail}, head:{head}, delta:{(dx,dy)}")
     if abs(dx) == 2 and abs(dy) < 2:
         tx = dx / abs(dx) + tx
         ty = ty if dy == 0 else ty + dy / abs(dy)
@@ -52,7 +51,7 @@ def solve1(puzzle):
 
     visited_by_tail = set()
 
-    def get_next(start, direction, steps=1):
+    def get_next(start, direction):
         dx, dy = directions.get(direction)
         sx, sy = start
         return sx + dx, sy + dy
@@ -78,7 +77,7 @@ def solve2(puzzle):
 
     visited_by_tail = set()
 
-    def get_next(start, direction, steps=1):
+    def get_next(start, direction):
         dx, dy = directions.get(direction)
         sx, sy = start
         return sx + dx, sy + dy
@@ -96,8 +95,8 @@ def solve2(puzzle):
     return len(visited_by_tail)
 
 
-# print(solve1(sample))
-# print(puzzle)
-# print(solve1(puzzle))
+print(solve1(sample))
+print(puzzle)
+print(solve1(puzzle))
 print(solve2(sample2))
 print(solve2(puzzle))
