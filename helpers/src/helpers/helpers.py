@@ -12,8 +12,7 @@ def read_input(year, day_number: int):
     if len(files) < 1:
         raise IOError(f"No input found for Day {day_number}")
     with open(files[0]) as infile:
-        raw = infile.readlines()
-    data = "".join(filter(lambda x: len(x.strip()) > 0, raw))
+        data = infile.read().strip("\n")
     assert len(data) > 0, f"Empty data for Day {day_number}"
     return data
 
