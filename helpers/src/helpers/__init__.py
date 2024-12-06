@@ -1,1 +1,1 @@
-from .helpers import read_input, Grid
+from .helpers import read_input, Grid, GridDirection

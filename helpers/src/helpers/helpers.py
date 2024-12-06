@@ -1,8 +1,13 @@
 from dataclasses import dataclass, field
 
+from enum import Enum
 from pathlib import Path
 import re
 from typing import List
+
+
+class GridOutOfBoundsError(IndexError):
+    pass
 
 
 def read_input(year, day_number: int):
@@ -46,10 +51,13 @@ class Grid:
 
     def _validate_coords(self, x, y):
         oob_message = "Out of bound in {}"
-        assert x < self.len_x, oob_message.format("x")
-        assert y < self.len_y, oob_message.format("y")
-        assert 0 <= x, oob_message.format("x")
-        assert 0 <= y, oob_message.format("x")
+        try:
+            assert x < self.len_x, oob_message.format("x")
+            assert y < self.len_y, oob_message.format("y")
+            assert 0 <= x, oob_message.format("x")
+            assert 0 <= y, oob_message.format("x")
+        except AssertionError as e:
+            raise GridOutOfBoundsError(e)
 
     def col(self, x):
         self._validate_coords(x, 0)
@@ -98,3 +106,32 @@ class Grid:
     def print(self):
         for r in self.rows:
             print(" " + " ".join(r))
+
+    def find(self, target):
+        for x in range(self.len_x):
+            for y in range(self.len_y):
+                if self.at(x, y) == target:
+                    yield x, y
+
+
+class GridDirection(Enum):
+    UP = (0, -1)
+    DOWN = (0, 1)
+    LEFT = (-1, 0)
+    RIGHT = (1, 0)
+
+    def turn_left(self):
+        return {
+            self.UP: self.LEFT,
+            self.LEFT: self.DOWN,
+            self.DOWN: self.RIGHT,
+            self.RIGHT: self.UP,
+        }[self]
+
+    def turn_right(self):
+        return {
+            self.LEFT: self.UP,
+            self.DOWN: self.LEFT,
+            self.RIGHT: self.DOWN,
+            self.UP: self.RIGHT,
+        }[self]
