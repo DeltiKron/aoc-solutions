@@ -13,7 +13,9 @@ def read_input(year, day_number: int):
         raise IOError(f"No input found for Day {day_number}")
     with open(files[0]) as infile:
         raw = infile.readlines()
-        return "".join(filter(lambda x: len(x.strip()) > 0, raw))
+    data = "".join(filter(lambda x: len(x.strip()) > 0, raw))
+    assert len(data) > 0, f"Empty data for Day {day_number}"
+    return data
 
 
 @dataclass
@@ -66,6 +68,33 @@ class Grid:
     def cols(self):
         for i in range(self.len_x):
             yield self.col(i)
+
+    @property
+    def diagonal_indexes_lb(self):
+        start_indexes = [(0, i) for i in range(self.len_y - 1, 0, -1)]
+        start_indexes += [(i, 0) for i in range(self.len_x)]
+        for x, y in start_indexes:
+            yield [(x + i, y + i) for i in range(min(self.len_x - x, self.len_y - y))]
+
+    @property
+    def diagonals_lb(self):
+        for idxs in self.diagonal_indexes_lb:
+            yield [self.at(x, y) for x, y in idxs]
+
+    @property
+    def diagonal_indexes_lt(self):
+        start_indexes = [(0, i) for i in range(self.len_y - 1)]
+        start_indexes += [(i, self.len_y - 1) for i in range(self.len_x)]
+        for x, y in start_indexes:
+            res = []
+            for i in range(min(self.len_x - x, y + 1)):
+                res.append((x + i, y - i))
+            yield res
+
+    @property
+    def diagonals_lt(self):
+        for idxs in self.diagonal_indexes_lt:
+            yield [self.at(x, y) for x, y in idxs]
 
     def print(self):
         for r in self.rows:
