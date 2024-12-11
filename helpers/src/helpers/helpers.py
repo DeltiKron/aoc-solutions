@@ -1,3 +1,4 @@
+from copy import deepcopy
 from dataclasses import dataclass, field
 
 from enum import Enum
@@ -37,6 +38,10 @@ class Grid:
         g.y = g.len_x
         return g
 
+    @classmethod
+    def from_other(cls, other):
+        return deepcopy(other)
+
     @property
     def len_y(self):
         return len(self.data)
@@ -70,6 +75,12 @@ class Grid:
     @property
     def rows(self):
         return (row for row in self.data)
+
+    @property
+    def indices(self):
+        for x in range(self.len_x):
+            for y in range(self.len_y):
+                yield x, y
 
     @property
     def cols(self):
@@ -108,10 +119,15 @@ class Grid:
             print(" " + " ".join(r))
 
     def find(self, target):
-        for x in range(self.len_x):
-            for y in range(self.len_y):
-                if self.at(x, y) == target:
-                    yield x, y
+        for x, y in self.indices:
+            if self.at(x, y) == target:
+                yield x, y
+
+    def set(self, x, y, value):
+        self._validate_coords(x, y)
+        line = list(item for item in self.data[y])
+        line[x] = value
+        self.data[y] = "".join(line)
 
 
 class GridDirection(Enum):
