@@ -47,9 +47,7 @@ def solve1(input_data):
     print("Total space:", 70000000)
     print("Occupied space:", occupied)
     print("Space needed:", needed)
-    res2 = list(
-        [s for _, s in sorted(sizes.items(), key=lambda x: x[1]) if s >= needed]
-    )[0]
+    res2 = list([s for _, s in sorted(sizes.items(), key=lambda x: x[1]) if s >= needed])[0]
     print(res2)
     return res1
 
