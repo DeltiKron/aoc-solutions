@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 import re
-from typing import List
+from typing import Callable, List, Tuple
 
 
 class GridOutOfBoundsError(IndexError):
@@ -53,6 +53,13 @@ class Grid:
     def at(self, x, y):
         self._validate_coords(x, y)
         return self.cast_func(self.data[y][x])
+
+    def is_in_bounds(self, x,y):
+        try:
+            self._validate_coords(x,y)
+            return True
+        except GridOutOfBoundsError:
+            return False
 
     def _validate_coords(self, x, y):
         oob_message = "Out of bound in {}"
@@ -128,6 +135,13 @@ class Grid:
         line = list(item for item in self.data[y])
         line[x] = value
         self.data[y] = "".join(line)
+    
+    def find_where(self, check_node:Callable[[Tuple[int, int], 'Grid'],Tuple[bool, str]]):
+        for coord in self.indices:
+            match, res = check_node(coord,self)
+            if match:
+                yield res, coord
+
 
 
 class GridDirection(Enum):
